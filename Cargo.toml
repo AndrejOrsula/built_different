@@ -1,0 +1,26 @@
+[package]
+name = "built_different"
+authors = ["Andrej Orsula <orsula.andrej@gmail.com>"]
+categories = ["development-tools::build-utils"]
+description = "Utilities for Rust build scripts"
+edition = "2021"
+keywords = ["build"]
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/AndrejOrsula/built_different"
+rust-version = "1.63"
+version = "0.1.0"
+
+[dependencies]
+anyhow = { version = "1.0" }
+compress-tools = { version = "0.14" }
+diffy = { version = "0.3" }
+dirs = { version = "5" }
+reqwest = { version = "0.11" }
+tokio = { version = "1.32", features = ["rt-multi-thread"] }
+walkdir = { version = "2" }
+
+[lib]
+name = "built_different"
+path = "src/lib.rs"
+crate-type = ["rlib"]
