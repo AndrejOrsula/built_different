@@ -10,12 +10,11 @@ Utilities for Rust build scripts.
 
 ## Dependencies
 
-Please install `libarchive` (3.2.0 or newer) on your system before using this crate, which is a transitive dependency of [`compress-tools`](https://github.com/OSSystems/compress-tools-rs).
+- `libarchive` as a transitive dependency of [`compress-tools`](https://github.com/OSSystems/compress-tools-rs).
 
 ## Instructions
 
-<details open>
-<summary><h3><a href="#-rust"><img src="https://rustacean.net/assets/rustacean-flat-noshadow.svg" width="16" height="16"></a> Rust</h3></summary>
+### <a href="#-rust"><img src="https://rustacean.net/assets/rustacean-flat-noshadow.svg" width="16" height="16"></a> Rust
 
 Add `built_different` as a Rust dependency to your [`Cargo.toml`](https://doc.rust-lang.org/cargo/reference/manifest.html) manifest.
 
@@ -23,8 +22,6 @@ Add `built_different` as a Rust dependency to your [`Cargo.toml`](https://doc.ru
 [dependencies]
 built_different = "0.1"
 ```
-
-</details>
 
 ## License
 
