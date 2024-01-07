@@ -63,7 +63,7 @@ jobs:
         run: cargo check --workspace --all-targets --all-features --verbose
 
       ## cargo test
-      - name: cargo test (default features)
+      - name: cargo test
         run: cargo test --workspace --all-targets --verbose
       - name: cargo test --no-default-features
         run: cargo test --workspace --all-targets --no-default-features --verbose
@@ -71,22 +71,39 @@ jobs:
         run: cargo test --workspace --all-targets --all-features --verbose
 
       ## cargo test --doc
-      - name: cargo test --doc (default features)
+      - name: cargo test --doc
         run: cargo test --workspace --doc --verbose
       - name: cargo test --doc --no-default-features
         run: cargo test --workspace --doc --no-default-features --verbose
       - name: cargo test --doc --all-features
         run: cargo test --workspace --doc --all-features --verbose
 
-      ## cargo clippy
-      - name: cargo clippy (stable only)
+      ## [stable] cargo clippy
+      - name: stable | cargo clippy
         if: ${{ matrix.toolchain == 'stable' }}
         run: cargo clippy --workspace --all-targets --all-features --no-deps --verbose -- --deny warnings
 
-      ## cargo doc
-      - name: doc --document-private-items (stable only)
+      ## [stable] cargo doc
+      - name: stable | cargo doc --document-private-items
         if: ${{ matrix.toolchain == 'stable' }}
         run: cargo doc --workspace --all-features --no-deps --document-private-items --verbose
+
+      ## [stable] Code coverage
+      - name: stable | Install cargo llvm-cov for code coverage
+        uses: taiki-e/install-action@cargo-llvm-cov
+        if: ${{ matrix.toolchain == 'stable' }}
+      ## [stable] Generate coverage with cargo llvm-cov
+      - name: stable | Generate coverage
+        if: ${{ matrix.toolchain == 'stable' }}
+        run: cargo llvm-cov --workspace --all-features --lcov --output-path lcov.info
+      ## [stable] Upload coverage to codecov.io
+      - name: stable | Upload coverage
+        if: ${{ matrix.toolchain == 'stable' }}
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: lcov.info
+          fail_ci_if_error: true
 
   miri:
     needs: cargo
@@ -104,12 +121,12 @@ jobs:
       - name: Install libarchive-dev
         run: sudo apt-get update && sudo apt-get install -yq --no-install-recommends libarchive-dev
 
-      - name: cargo miri test (default features)
-        run: cargo miri test --workspace --verbose
+      - name: cargo miri test
+        run: cargo miri test --workspace --all-targets --verbose
       - name: cargo miri test --no-default-features
-        run: cargo miri test --workspace --no-default-features --verbose
+        run: cargo miri test --workspace --all-targets --no-default-features --verbose
       - name: cargo miri test --all-features
-        run: cargo miri test --workspace --all-features --verbose
+        run: cargo miri test --workspace --all-targets --all-features --verbose
 
   deny:
     needs: cargo
@@ -137,30 +154,3 @@ jobs:
       - name: Publish crate (library)
         if: ${{ env.CARGO_REGISTRY_TOKEN != '' }}
         run: cargo publish --no-verify --package ${{ env.LIB_PACKAGE_NAME }} --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
-
-  codecov:
-    needs: cargo
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: Swatinem/rust-cache@v2
-        with:
-          save-if: ${{ github.event_name == 'push'}}
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: taiki-e/install-action@cargo-llvm-cov
-
-      ## Install dependencies
-      - name: Install libarchive-dev
-        run: sudo apt-get update && sudo apt-get install -yq --no-install-recommends libarchive-dev
-
-      ## Generate coverage with cargo llvm-cov
-      - name: Generate coverage
-        run: cargo llvm-cov --workspace --all-features --lcov --output-path lcov.info
-
-      ## Upload coverage to codecov.io
-      - name: Upload coverage
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: lcov.info
-          fail_ci_if_error: true
