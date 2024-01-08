@@ -13,6 +13,7 @@ version = "0.1.0"
 
 [dependencies]
 anyhow = { version = "1.0" }
+clap = { version = "4.4", features = ["derive"] }
 compress-tools = { version = "0.14" }
 diffy = { version = "0.3" }
 dirs = { version = "5" }
@@ -24,3 +25,7 @@ walkdir = { version = "2" }
 name = "built_different"
 path = "src/lib.rs"
 crate-type = ["rlib"]
+
+[[bin]]
+name = "create_patches"
+path = "src/bin/create_patches.rs"
