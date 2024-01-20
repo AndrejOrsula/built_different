@@ -129,7 +129,6 @@ jobs:
         run: cargo miri test --workspace --all-targets --all-features --verbose
 
   deny:
-    needs: cargo
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
