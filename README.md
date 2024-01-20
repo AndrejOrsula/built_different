@@ -1,9 +1,12 @@
 # built_different
 
 <p align="left">
-  <a href="https://crates.io/crates/built_different">                                   <img alt="crates.io" src="https://img.shields.io/crates/v/built_different.svg"></a>
-  <a href="https://github.com/AndrejOrsula/built_different/actions/workflows/rust.yml"> <img alt="Rust"      src="https://github.com/AndrejOrsula/built_different/actions/workflows/rust.yml/badge.svg"></a>
-  <a href="https://codecov.io/gh/AndrejOrsula/built_different">                         <img alt="codecov"   src="https://codecov.io/gh/AndrejOrsula/built_different/branch/main/graph/badge.svg"></a>
+  <a href="https://crates.io/crates/built_different">                                   <img alt="crates.io"  src="https://img.shields.io/crates/v/built_different.svg"></a>
+  <a href="https://docs.rs/built_different">                                            <img alt="docs.rs"    src="https://docs.rs/built_different/badge.svg"></a>
+  <a href="https://github.com/AndrejOrsula/built_different/actions/workflows/rust.yml"> <img alt="Rust"       src="https://github.com/AndrejOrsula/built_different/actions/workflows/rust.yml/badge.svg"></a>
+  <a href="https://deps.rs/repo/github/AndrejOrsula/built_different">                   <img alt="deps.rs"    src="https://deps.rs/repo/github/AndrejOrsula/built_different/status.svg"></a>
+  <a href="https://codecov.io/gh/AndrejOrsula/built_different">                         <img alt="codecov.io" src="https://codecov.io/gh/AndrejOrsula/built_different/branch/main/graph/badge.svg"></a>
+
 </p>
 
 Utilities for Rust build scripts.
