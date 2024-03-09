@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MSRV: "1.70"
+  MSRV: "1.74"
   CARGO_TERM_COLOR: always
   LIB_PACKAGE_NAME: built_different
 
