@@ -14,6 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  MSRV: "1.74"
   CARGO_TERM_COLOR: always
   LIB_PACKAGE_NAME: built_different
 
@@ -37,7 +38,7 @@ jobs:
       fail-fast: false
       matrix:
         toolchain:
-          - "1.70" # Minimal supported Rust version (MSRV)
+          - MSRV
           - stable
           - beta
     steps:
@@ -46,6 +47,15 @@ jobs:
         with:
           save-if: ${{ github.event_name == 'push'}}
       - uses: dtolnay/rust-toolchain@master
+        if: ${{ matrix.toolchain != 'MSRV' && matrix.toolchain != 'stable' }}
+        with:
+          toolchain: ${{ matrix.toolchain }}
+      - uses: dtolnay/rust-toolchain@master
+        if: ${{ matrix.toolchain == 'MSRV' }}
+        with:
+          toolchain: ${{ env.MSRV }}
+      - uses: dtolnay/rust-toolchain@master
+        if: ${{ matrix.toolchain == 'stable' }}
         with:
           toolchain: ${{ matrix.toolchain }}
           components: clippy
@@ -103,7 +113,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: lcov.info
-          fail_ci_if_error: true
+          fail_ci_if_error: false
 
   miri:
     needs: cargo
@@ -129,7 +139,6 @@ jobs:
         run: cargo miri test --workspace --all-targets --all-features --verbose
 
   deny:
-    needs: cargo
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
