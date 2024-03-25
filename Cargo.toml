@@ -17,7 +17,7 @@ clap = { version = "4.5", features = ["derive"] }
 compress-tools = { version = "0.14" }
 diffy = { version = "0.3" }
 dirs = { version = "5" }
-reqwest = { version = "0.11" }
+reqwest = { version = "0.12" }
 tokio = { version = "1.36", features = ["rt-multi-thread"] }
 walkdir = { version = "2" }
 
