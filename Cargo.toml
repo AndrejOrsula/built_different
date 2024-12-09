@@ -18,7 +18,7 @@ compress-tools = { version = "0.15" }
 diffy = { version = "0.4" }
 dirs = { version = "5" }
 reqwest = { version = "0.12" }
-tokio = { version = "1.41", features = ["rt-multi-thread"] }
+tokio = { version = "1.42", features = ["rt-multi-thread"] }
 walkdir = { version = "2" }
 
 [lib]
